@@ -23,7 +23,7 @@ namespace ZXing.Net.Maui
 		AVCaptureVideoPreviewLayer videoPreviewLayer;
 		CaptureDelegate captureDelegate;
 		DispatchQueue dispatchQueue;
-		Dictionary<NSString, MSize> Resolutions => new()
+		Dictionary<NSString, MSize>gitk a Resolutions => new()
 		{
 			{ AVCaptureSession.Preset352x288, new MSize(352, 288) },
 			{ AVCaptureSession.PresetMedium, new MSize(480, 360) },
