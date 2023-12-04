@@ -107,24 +107,23 @@ namespace ZXing.Net.Maui
 					captureDevice = null;
 				}
 
-				var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
-				foreach (var device in devices)
-				{
-					if (CameraLocation == CameraLocation.Front &&
-						device.Position == AVCaptureDevicePosition.Front)
-					{
-						captureDevice = device;
-						break;
-					}
-					else if (CameraLocation == CameraLocation.Rear && device.Position == AVCaptureDevicePosition.Back)
-					{
-						captureDevice = device;
-						break;
-					}
-				}
+				captureDevice = AVCaptureDevice.GetDefaultDevice(AVCaptureDeviceType.BuiltInTripleCamera, AVMediaTypes.Video, CameraLocation == CameraLocation.Rear ? AVCaptureDevicePosition.Back : AVCaptureDevicePosition.Front);
+                if(captureDevice == null) {
+                    var devices = AVCaptureDevice.DevicesWithMediaType(AVMediaTypes.Video.GetConstant());
+                    foreach(var device in devices) {
+                        if(CameraLocation == CameraLocation.Front &&
+                           device.Position == AVCaptureDevicePosition.Front) {
+                            captureDevice = device;
+                            break;
+                        } else if(CameraLocation == CameraLocation.Rear && device.Position == AVCaptureDevicePosition.Back) {
+                            captureDevice = device;
+                            break;
+                        }
+                    }
 
-				if (captureDevice == null)
-					captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Video);
+                    if(captureDevice == null)
+                        captureDevice = AVCaptureDevice.GetDefaultDevice(AVMediaTypes.Video);
+                }
 
 				if (captureDevice is null)
 					return;
